@@ -1,10 +1,8 @@
 <.header>
   Listing Rooms
-  <:actions>
-    <.link patch={~p"/rooms/new"}>
-      <.button>New Room</.button>
-    </.link>
-  </:actions>
+  <div class="flex">
+    <.button phx-click="create_room">New Room</.button>
+  </div>
 </.header>
 
 <.table

@@ -44,4 +44,17 @@ defmodule SorteioWeb.RoomLive.Index do
 
     {:noreply, stream_delete(socket, :rooms, room)}
   end
+
+  def handle_event("create_room", _params, socket) do
+    case Rooms.create_room() do
+      {:ok, room} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Room created successfully")
+         |> push_navigate(to: ~p"/rooms/#{room.id}")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, form: to_form(changeset))}
+    end
+  end
 end
