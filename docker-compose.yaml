@@ -1,0 +1,11 @@
+services:
+  sorteio_db:
+    image: bitnami/postgresql:latest
+    environment:
+      POSTGRES_USER: sorteio
+      POSTGRES_PASSWORD: sorteio
+      POSTGRES_DB: sorteio_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
