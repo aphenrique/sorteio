@@ -1,5 +1,5 @@
 services:
-  sorteio_db:
+  db:
     image: bitnami/postgresql:latest
     environment:
       POSTGRES_USER: sorteio
@@ -8,4 +8,13 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./.docker/data:/var/lib/postgresql/data
+  
+  app:
+    build: .
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
