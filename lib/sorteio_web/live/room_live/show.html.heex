@@ -14,7 +14,7 @@
   </:item>
 </.list>
 
-<.back navigate={~p"/rooms"}>Back to rooms</.back>
+<%!-- <.back navigate={~p"/rooms"}>Back to rooms</.back> --%>
 
 <.modal :if={@live_action == :edit} id="room-modal" show on_cancel={JS.patch(~p"/rooms/#{@room}")}>
   <.live_component
