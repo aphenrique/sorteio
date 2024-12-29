@@ -26,8 +26,7 @@ defmodule SorteioWeb.Router do
     live "/rooms/:id", RoomLive.Show, :show
     live "/rooms/:id/show/edit", RoomLive.Show, :edit
 
-
-    get "/users/new", UserController, :new
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.

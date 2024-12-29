@@ -5,9 +5,9 @@ defmodule SorteioWeb.RoomLive.Show do
   alias SorteioWeb.Presence
 
   @impl true
-  def mount(%{"id" => id}, _session, socket) do
+  def mount(%{"id" => id}, session, socket) do
     topic = "room:#{id}"
-    user_id = 1234
+    user_id = session["email"]
 
     Presence.track(
       self(),
