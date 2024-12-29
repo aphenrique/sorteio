@@ -17,7 +17,8 @@ defmodule Sorteio.Application do
       # Start a worker by calling: Sorteio.Worker.start_link(arg)
       # {Sorteio.Worker, arg},
       # Start to serve requests, typically the last entry
-      SorteioWeb.Endpoint
+      SorteioWeb.Endpoint,
+      SorteioWeb.Presence
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
