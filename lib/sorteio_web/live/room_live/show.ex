@@ -2,9 +2,26 @@ defmodule SorteioWeb.RoomLive.Show do
   use SorteioWeb, :live_view
 
   alias Sorteio.Rooms
+  alias SorteioWeb.Presence
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(%{"id" => id}, _session, socket) do
+    topic = "room:#{id}"
+    user_id = 1234
+
+    Presence.track(
+      self(),
+      topic,
+      user_id,
+      %{
+        name: "_______NAME______",
+        user_id: user_id
+      }
+    )
+
+    SorteioWeb.Endpoint.subscribe(topic)
+
+
     {:ok, socket}
   end
 
@@ -14,6 +31,14 @@ defmodule SorteioWeb.RoomLive.Show do
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:room, Rooms.get_room!(id))}
+  end
+
+  @impl true
+  def handle_info(%{event: "presence_diff"} = event, socket) do
+    event
+    |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+
+    {:noreply, socket}
   end
 
   defp page_title(:show), do: "Show Room"
