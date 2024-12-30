@@ -7,20 +7,18 @@ defmodule SorteioWeb.RoomLive.Show do
   @impl true
   def mount(%{"id" => id}, session, socket) do
     topic = "room:#{id}"
-    user_id = session["email"]
 
     Presence.track(
       self(),
       topic,
-      user_id,
+      session["email"],
       %{
-        name: "_______NAME______",
-        user_id: user_id
+        name: session["name"],
+        user_id: session["email"]
       }
     )
 
     SorteioWeb.Endpoint.subscribe(topic)
-
 
     {:ok, socket}
   end
