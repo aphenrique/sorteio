@@ -20,7 +20,12 @@ defmodule SorteioWeb.RoomLive.Show do
 
     SorteioWeb.Endpoint.subscribe(topic)
 
-    {:ok, socket}
+    {:ok,
+    socket
+      |> assign(:id, id)
+      |> assign(:users, [])
+      |> reload_users()
+    }
   end
 
   @impl true
@@ -32,13 +37,25 @@ defmodule SorteioWeb.RoomLive.Show do
   end
 
   @impl true
-  def handle_info(%{event: "presence_diff"} = event, socket) do
-    event
-    |> IO.inspect(label: "#{__MODULE__}:#{__ENV__.line} #{DateTime.utc_now}", limit: :infinity)
+  def handle_info(%{event: "presence_diff"}, socket) do
+    {:noreply, reload_users(socket)}
+  end
 
-    {:noreply, socket}
+  def reload_users(socket) do
+    users = Presence.list(topic(socket))
+          |> Enum.map(fn {_user_id, data} ->
+            data[:metas]
+            |> List.first
+          end)
+
+
+    socket
+    |> assign(:users, users)
+
   end
 
   defp page_title(:show), do: "Show Room"
   defp page_title(:edit), do: "Edit Room"
+
+  defp topic(socket), do: "room:#{socket.assigns.id}"
 end
