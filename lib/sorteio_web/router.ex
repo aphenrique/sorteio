@@ -18,8 +18,9 @@ defmodule SorteioWeb.Router do
     pipe_through :browser
 
     # get "/", PageController, :home
+    get "/", UserController, :new
 
-    live "/", RoomLive.Index, :index
+    # live "/", RoomLive.Index, :index
     live "/rooms/new", RoomLive.Index, :new
     live "/rooms/:id/edit", RoomLive.Index, :edit
 
@@ -27,6 +28,7 @@ defmodule SorteioWeb.Router do
     live "/rooms/:id/show/edit", RoomLive.Show, :edit
 
     resources "/users", UserController
+
   end
 
   # Other scopes may use custom stacks.

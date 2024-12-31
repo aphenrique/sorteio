@@ -2,10 +2,11 @@
   <.error :if={@changeset.action}>
     Oops, something went wrong! Please check the errors below.
   </.error>
-  <div class="flex space-x-4 justify-stretch">
-  <.input field={f[:name]} type="text" label="Name" />
-  <.input field={f[:email]} type="text" label="Email" />
+  <div class="flex space-x-4">
+    <.input field={f[:name]} type="text" label="Name" />
+    <.input field={f[:email]} type="text" label="Email" />
   </div>
+  <.input field={f[:room_id]} type="text" label="ID da sala (opcional)" />
   <:actions>
     <.button>Save User</.button>
   </:actions>
