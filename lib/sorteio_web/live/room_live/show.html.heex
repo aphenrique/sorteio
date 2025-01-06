@@ -1,10 +1,41 @@
-<div class="py-4">
-<h1>Sala <%= @id %></h1>
-<span><%= if @admin? do "Admin" end %> </span>
+<div id="header" class="p-4 bg-zinc-200">
+  <h1>Sala {@id}</h1>
 </div>
 
-<ul>
-<%= for user <- @users do %>
-  <li><%= user.name %></li>
-<% end %>
-</ul>
+<div class="flex grow bg-zinc-300 justify-between gap-4 p-4">
+  <div class="container grow place-items-stretch bg-blue-300">
+    <%= if @admin? do %>
+      <.simple_form for={@changeset} id="prize-form" phx-submit="create_prize">
+        <:actions>
+          <h1 class="text-lg font-bold">Prize</h1>
+          <div class="flex gap-2 self-end">
+            <.input field={@changeset[:name]} type="text" class="grow self-end " />
+            <.button phx-disable-with="..." class="flex-none w-10 h-10 self-end">+</.button>
+          </div>
+        </:actions>
+      </.simple_form>
+    <% end %>
+  </div>
+
+  <div class="flex-grow bg-gray-300">
+    <h2 class="text-xl font-bold mb-2">Users</h2>
+    <div>
+      <ul>
+        <%= for user <- @users do %>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+          <li>{user.name}</li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

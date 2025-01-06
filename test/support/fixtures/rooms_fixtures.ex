@@ -17,4 +17,20 @@ defmodule Sorteio.RoomsFixtures do
 
     room
   end
+
+  @doc """
+  Generate a prize.
+  """
+  def prize_fixture(attrs \\ %{}) do
+    {:ok, prize} =
+      attrs
+      |> Enum.into(%{
+        name: "some name",
+        winner_email: "some winner_email",
+        winner_name: "some winner_name"
+      })
+      |> Sorteio.Rooms.create_prize()
+
+    prize
+  end
 end

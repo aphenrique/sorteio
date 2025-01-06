@@ -1,0 +1,43 @@
+<.header>
+  Listing Prizes
+  <:actions>
+    <.link patch={~p"/prizes/new"}>
+      <.button>New Prize</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="prizes"
+  rows={@streams.prizes}
+  row_click={fn {_id, prize} -> JS.navigate(~p"/prizes/#{prize}") end}
+>
+  <:col :let={{_id, prize}} label="Name">{prize.name}</:col>
+  <:col :let={{_id, prize}} label="Winner name">{prize.winner_name}</:col>
+  <:col :let={{_id, prize}} label="Winner email">{prize.winner_email}</:col>
+  <:action :let={{_id, prize}}>
+    <div class="sr-only">
+      <.link navigate={~p"/prizes/#{prize}"}>Show</.link>
+    </div>
+    <.link patch={~p"/prizes/#{prize}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, prize}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: prize.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="prize-modal" show on_cancel={JS.patch(~p"/prizes")}>
+  <.live_component
+    module={SorteioWeb.PrizeLive.FormComponent}
+    id={@prize.id || :new}
+    title={@page_title}
+    action={@live_action}
+    prize={@prize}
+    patch={~p"/prizes"}
+  />
+</.modal>

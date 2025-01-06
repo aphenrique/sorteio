@@ -1,0 +1,28 @@
+<.header>
+  Prize {@prize.id}
+  <:subtitle>This is a prize record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/prizes/#{@prize}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit prize</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name">{@prize.name}</:item>
+  <:item title="Winner name">{@prize.winner_name}</:item>
+  <:item title="Winner email">{@prize.winner_email}</:item>
+</.list>
+
+<.back navigate={~p"/prizes"}>Back to prizes</.back>
+
+<.modal :if={@live_action == :edit} id="prize-modal" show on_cancel={JS.patch(~p"/prizes/#{@prize}")}>
+  <.live_component
+    module={SorteioWeb.PrizeLive.FormComponent}
+    id={@prize.id}
+    title={@page_title}
+    action={@live_action}
+    prize={@prize}
+    patch={~p"/prizes/#{@prize}"}
+  />
+</.modal>
